@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="loginstyle.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="container1">
+            <div class="logo">
+                <img src="assets/logo1.png" alt="" width="80px">
+            </div>
+            <form class="login-form" id="uploadbanner">
+                <div class="content">
+                    <h2>FORM</h2>
+                    <div class="input-field">
+                        <input type="text" id="name" placeholder="Name" autocomplete="nope" >
+                    </div>
+                    <div class="input-field">
+                        <input type="date" id="dob" placeholder="Date of Birth" autocomplete="nope" >
+                    </div>
+                    <div class="input-field">
+                        <input type="number" id="weight" placeholder="Weight(kg)" autocomplete="nope" >
+                    </div>
+                    <div class="input-field">
+                        <input type="number" id="height" placeholder="Height(cm)" autocomplete="nope" >
+                    </div>
+                    <div class="input-field radio-container">
+                        <input type="radio" id="male" name="sex" value="male">
+                        <label for="male">male</label>
+                        <input type="radio" id="female" name="sex" value="female">
+                        <label for="female">female</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="email" id="email" placeholder="Email" autocomplete="nope" >
+                    </div>
+                    <div class="input-field file-upload">
+                        <label for="upload">Upload your x-ray here:</label>
+                        <input type="file" id="upload" autocomplete="nope" multiple>
+                    </div>
+                </div>
+                <div class="action">
+                    <button>Submit</button>
+                </div>
+            </form>
+        </div>
+        <div class="container1">
+            <div class="slideshow-container">
+                <img class="slideshow-image active" src="assets/imgg1.png" alt="Image 1">
+                <img class="slideshow-image" src="assets/dataset-cover.jpg" alt="Image 2">
+                <img class="slideshow-image" src="assets/imgg2.png" alt="Image 3">
+            </div>
+
+        </div>
+        <script src="loginscript.js"></script>
+        <script src="index.js"></script>
+        <script>
+            const form = document.getElementById("uploadbanner");
+            form.addEventListener("submit", submitForm);
+        </script>
+
+
+</body>
+
+</html>

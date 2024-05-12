@@ -7,6 +7,7 @@ import yaml
 import os
 from utils import load_chat_history_json, save_chat_history_json, get_timestamp
 from audio_handler import transcribe_audio
+from pdf_handler import add_documents_to_db
 
 with open("config.yaml","r") as f:
     # config=yaml.load(f,Loader=yaml.FullLoader)
@@ -72,6 +73,12 @@ def main():
 
    uploaded_audio=st.sidebar.file_uploader("upload an audio file",type=["wav","mp3","ogg"])
    uploaded_image=st.sidebar.file_uploader("upload an image file",type=["jpeg","jpg","png"])
+   uploaded_pdf=st.sidebar.file_uploader("upload an pdf file",accept_multiple_files=True,key="pdf_upload",type=["pdf"])
+
+   if uploaded_pdf:
+      with st.spinner("Processing pdf..."):
+         add_documents_to_db(uploaded_pdf)
+
 
    if uploaded_audio:
       print(uploaded_audio.getvalue())

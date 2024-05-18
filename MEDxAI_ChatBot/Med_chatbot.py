@@ -1,5 +1,5 @@
 import streamlit as st
-from llm_chains import load_normal_chain
+from llm_chains import load_normal_chain, load_pdf_chat_chain
 from langchain.memory import StreamlitChatMessageHistory
 from streamlit_mic_recorder import mic_recorder
 from Image_handler import handle_image
@@ -14,11 +14,16 @@ with open("config.yaml","r") as f:
     config = yaml.safe_load(f)
 
 def load_chain(chat_history):
+   if st.session_state.pdf_chat:
+      return load_pdf_chat_chain(chat_history)
    return load_normal_chain(chat_history)
 
 def clear_input_field():
    st.session_state.user_question=  st.session_state.user_input
    st.session_state.user_input=""
+
+def toggle_pdf_chat():
+   st.session_state.pdf_chat=True
 
 def set_send_input():
     st.session_state.send_input = True
@@ -54,6 +59,7 @@ def main():
 
    index= chat_sessions.index(st.session_state.session_index_tracker)
    st.sidebar.selectbox("Select a chat session",chat_sessions,key="session_key",index=index, on_change=track_index)
+   st.sidebar.toggle("PDF Chat", key="pdf_chat",value=False)
 
    if st.session_state.session_key != "new_session":
       st.session_state.history = load_chat_history_json(config["chat_history_path"] + st.session_state.session_key)
@@ -73,7 +79,7 @@ def main():
 
    uploaded_audio=st.sidebar.file_uploader("upload an audio file",type=["wav","mp3","ogg"])
    uploaded_image=st.sidebar.file_uploader("upload an image file",type=["jpeg","jpg","png"])
-   uploaded_pdf=st.sidebar.file_uploader("upload an pdf file",accept_multiple_files=True,key="pdf_upload",type=["pdf"])
+   uploaded_pdf=st.sidebar.file_uploader("upload an pdf file",accept_multiple_files=True,key="pdf_upload",type=["pdf"],on_change=toggle_pdf_chat)
 
    if uploaded_pdf:
       with st.spinner("Processing pdf..."):

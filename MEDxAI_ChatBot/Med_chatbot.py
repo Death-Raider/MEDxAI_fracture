@@ -2,7 +2,7 @@ import streamlit as st
 from llm_chains import load_normal_chain, load_pdf_chat_chain
 from langchain.memory import StreamlitChatMessageHistory
 from streamlit_mic_recorder import mic_recorder
-from Image_handler import handle_image
+# from Image_handler import handle_image
 import yaml
 import os
 from utils import load_chat_history_json, save_chat_history_json, get_timestamp
@@ -78,7 +78,7 @@ def main():
       send_button = st.button("Send",key="send_button",on_click=clear_input_field)
 
    uploaded_audio=st.sidebar.file_uploader("upload an audio file",type=["wav","mp3","ogg"])
-   uploaded_image=st.sidebar.file_uploader("upload an image file",type=["jpeg","jpg","png"])
+   # uploaded_image=st.sidebar.file_uploader("upload an image file",type=["jpeg","jpg","png"])
    uploaded_pdf=st.sidebar.file_uploader("upload an pdf file",accept_multiple_files=True,key="pdf_upload",type=["pdf"],on_change=toggle_pdf_chat)
 
    if uploaded_pdf:
@@ -102,15 +102,15 @@ def main():
       llm_chain.run(transcribed_audio)
 
    if send_button or st.session_state.send_input:
-      if uploaded_image:
-         with st.spinner("Processing image..."):
-            user_message = "Please describe this image"
-            if st.session_state.user_question != "":
-               user_message = st.session_state.user_question
-               st.session_state.user_question = ""
-            llm_answer = handle_image(uploaded_image.getvalue(),st.session_state.user_question)
-            chat_history.add_user_message(user_message)
-            chat_history.add_ai_message(llm_answer)
+      # if uploaded_image:
+      #    with st.spinner("Processing image..."):
+      #       user_message = "Please describe this image"
+      #       if st.session_state.user_question != "":
+      #          user_message = st.session_state.user_question
+      #          st.session_state.user_question = ""
+      #       # llm_answer = handle_image(uploaded_image.getvalue(),st.session_state.user_question)
+      #       chat_history.add_user_message(user_message)
+      #       # chat_history.add_ai_message(llm_answer)
 
       if st.session_state.user_question != "":
          llm_response=llm_chain.run(st.session_state.user_question)

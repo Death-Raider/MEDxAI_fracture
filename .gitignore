@@ -1,2 +1,3 @@
+*.pyc
 Webapp/node_modules
 Webapp/best.pt
